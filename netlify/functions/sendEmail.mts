@@ -1,7 +1,7 @@
 import { NextApiRequest } from 'next';
 import { Resend } from "resend";
 
-const resend = new Resend("re_ct4LRQR7_FoH3AJJtEYfPTFTFUBerfbz6");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: NextApiRequest,) {
   if (req.method  === "POST") {
@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest,) {
         // Envia o email usando o Resend API
         const emailSend = await resend.emails.send({
           from: "avejo.design@gmail.com", // Personalize com seu domínio autenticado
-          to: email,
+          to: process.env.RECEIVER_EMAIL as string,
           subject: `Novo contato de ${name}`,
           text: `Nome: ${name}\nE-mail: ${email}\nTelefone: ${phone}\nEmpresa: ${business}\nWebsite: ${website}\nOrçamento médio: ${budget}\nDeadline: ${deadline}`,
         });

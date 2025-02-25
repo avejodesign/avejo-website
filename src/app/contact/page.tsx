@@ -8,12 +8,43 @@ import { Footer } from "../sections/Footer";
 import { Header } from "../sections/Header";
 
 import InstagramSVG from "@/assets/contact-page/mdi_instagram.svg";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ReactLenis from "lenis/react";
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
+  const [status, setStatus] = useState<string | null>(null);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log(e.target.name)
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value}));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("Enviando...");
+
+    try {
+      const response = await fetch("/.netlify/functions/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("E-mail enviado com sucesso!");
+        setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
+      } else {
+        setStatus("Erro ao enviar. Tente novamente.");
+      }
+    } catch (error) {
+      setStatus(error + "Erro ao enviar. Verifique sua conexão.");
+    }
+  };
+  
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -40,7 +71,7 @@ export default function Contact() {
       duration: 1,
       stagger: 0.1,
     }, 0)
-  }, [containerRef])
+  }, [containerRef]);
 
   return (
     <ReactLenis root>
@@ -81,39 +112,42 @@ export default function Contact() {
           </div>
           <div className="md:flex-1">
             <div className="md:p-10 p-6 border rounded-[26px] lg:w-[540px] w-full mx-auto form-contact">
-              <form>
+              <form 
+                onSubmit={handleSubmit}
+              >
                 <ShuffleText as="h2" duration="1" className="shuffle-text md:text-2xl text-xl pb-6 size-fit" stagger={0.002}>
                   Dar início ao projeto
                 </ShuffleText>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Nome<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="name" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="name" name="name" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="email" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="email" name="email" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="phone" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="phone" name="phone" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="business" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="business" name="business" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="website" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="website" name="website" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="budget" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="budget" name="budget" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.budget}/>
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum prazo de entrega a ser realizado?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="deadline" className="h-12 border rounded-full px-4" />
+                  <input type="text" id="deadline" name="deadline" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline}/>
                 </div>
-                <button className="button-hero w-full bg-black text-white md:md:text-base text-sm text-sm py-3 px-6 rounded-full hover:opacity-60 transition">Entrar em contato</button>
+                <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm text-sm py-3 px-6 rounded-full hover:opacity-60 transition">Entrar em contato</button>
+                {status && <p>{status}</p>}
               </form>
             </div>
           </div>

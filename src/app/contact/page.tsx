@@ -13,14 +13,12 @@ import ReactLenis from "lenis/react";
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
+
+  const [formData, setFormData] = useState<{ name: string, email: string, phone: string, business: string, website: string, budget: string, deadline: string }>({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
   const [status, setStatus] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log(e.target.name)
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value}));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,8 +31,10 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      
+      const data = await response.json();
 
-      if (response.ok) {
+      if (data.success) {
         setStatus("E-mail enviado com sucesso!");
         setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
       } else {
@@ -44,7 +44,7 @@ export default function Contact() {
       setStatus(error + "Erro ao enviar. Verifique sua conexão.");
     }
   };
-  
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -112,7 +112,7 @@ export default function Contact() {
           </div>
           <div className="md:flex-1">
             <div className="md:p-10 p-6 border rounded-[26px] lg:w-[540px] w-full mx-auto form-contact">
-              <form 
+              <form
                 onSubmit={handleSubmit}
               >
                 <ShuffleText as="h2" duration="1" className="shuffle-text md:text-2xl text-xl pb-6 size-fit" stagger={0.002}>
@@ -120,31 +120,31 @@ export default function Contact() {
                 </ShuffleText>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Nome<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="name" name="name" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name}/>
+                  <input type="text" id="name" name="name" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="email" name="email" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email}/>
+                  <input type="text" id="email" name="email" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="phone" name="phone" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone}/>
+                  <input type="text" id="phone" name="phone" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="business" name="business" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business}/>
+                  <input type="text" id="business" name="business" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="website" name="website" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website}/>
+                  <input type="text" id="website" name="website" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="budget" name="budget" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.budget}/>
+                  <input type="text" id="budget" name="budget" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.budget} />
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum prazo de entrega a ser realizado?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="deadline" name="deadline" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline}/>
+                  <input type="text" id="deadline" name="deadline" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
                 </div>
                 <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm text-sm py-3 px-6 rounded-full hover:opacity-60 transition">Entrar em contato</button>
                 {status && <p>{status}</p>}

@@ -2,20 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Power-Grotesk";
+  src: url('../fonts/Power-Grotesk/PowerGrotesk-Regular.ttf') format('opentype');
+  font-weight: 600;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Power-Grotesk";
+}
+
+.shuffle-text .line {
+  clip-path: polygon(0 0, 100% 0, 100% 120%, 0% 120%) !important;
 }

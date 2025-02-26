@@ -11,38 +11,30 @@ import InstagramSVG from "@/assets/contact-page/mdi_instagram.svg";
 import { useRef, useState } from "react";
 import ReactLenis from "lenis/react";
 
+import emailjs from "@emailjs/browser";
+
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState<{ name: string, email: string, phone: string, business: string, website: string, budget: string, deadline: string }>({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
   const [status, setStatus] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("Enviando...");
 
-    try {
-      const response = await fetch("/.netlify/functions/sendEmail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      
-      const data = await response.json();
+    emailjs.send("service_bmt5gmb", "template_1k6srcb", formData, "BdMC1QfhJ-HYXLcsg").then((response) => {
+      console.log("EMAIL ENVIADO", response.status, response.text);
+      setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
+    }, (err) => {
+      console.log("Erro", err);
+    })
 
-      if (data.success) {
-        setStatus("E-mail enviado com sucesso!");
-        setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
-      } else {
-        setStatus("Erro ao enviar. Tente novamente.");
-      }
-    } catch (error) {
-      setStatus(error + "Erro ao enviar. Verifique sua conexão.");
-    }
   };
 
   useGSAP(() => {
@@ -120,31 +112,39 @@ export default function Contact() {
                 </ShuffleText>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Nome<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="name" name="name" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
+                  <input placeholder="Inserir nome" type="text" id="name" name="name" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
                 </div>
                 <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="email" name="email" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
+                  <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
+                  <input placeholder="Inserir seu melhor e-mail" type="email" id="email" name="email" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
                 </div>
                 <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="phone" name="phone" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
+                  <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
+                  <input placeholder="Inserir telefone" type="text" id="phone" name="phone" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
                 </div>
                 <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="business" name="business" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
+                  <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
+                  <input placeholder="Inserir nome da empresa" type="text" id="business" name="business" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
                 </div>
                 <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="website" name="website" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
+                  <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
+                  <input placeholder="https://sitedaempresa.com" type="url" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
                 </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="budget" name="budget" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.budget} />
+                <div className="mb-6 flex flex-col relative ">
+                  <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
+                  <select className="h-12 border rounded-full px-4" required id="budget" name="budget" value={formData.budget} onChange={handleChange}>
+                    <option value="" disabled>Selecione um orçamento</option>
+                    <option value="option1">R$ 2 mil - R$ 4 mil</option>
+                    <option value="option2">R$ 4 mil - R$ 8 mil</option>
+                    <option value="option3">R$ 8 mil - R$ 12 mil</option>
+                    <option value="option3">R$ 12 mil - R$ 15 mil</option>
+                    <option value="option3">Acima de R$ 15 mil</option>
+                  </select>
+
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum prazo de entrega a ser realizado?<span className="text-red-500 ">*</span></label>
-                  <input type="text" id="deadline" name="deadline" className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
+                  <input placeholder="Insira os dias ou meses" type="text" id="deadline" name="deadline" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
                 </div>
                 <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm text-sm py-3 px-6 rounded-full hover:opacity-60 transition">Entrar em contato</button>
                 {status && <p>{status}</p>}

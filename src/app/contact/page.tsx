@@ -128,17 +128,17 @@ export default function Contact() {
                 </div>
                 <div className="mb-6 flex flex-col">
                   <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
-                  <input placeholder="https://sitedaempresa.com" type="url" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
+                  <input placeholder="https://sitedaempresa.com" type="text" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
                 </div>
                 <div className="mb-6 flex flex-col relative ">
                   <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
                   <select className="h-12 border rounded-full px-4" required id="budget" name="budget" value={formData.budget} onChange={handleChange}>
                     <option value="" disabled>Selecione um orçamento</option>
-                    <option value="option1">R$ 2 mil - R$ 4 mil</option>
-                    <option value="option2">R$ 4 mil - R$ 8 mil</option>
-                    <option value="option3">R$ 8 mil - R$ 12 mil</option>
-                    <option value="option3">R$ 12 mil - R$ 15 mil</option>
-                    <option value="option3">Acima de R$ 15 mil</option>
+                    <option value="option1">R$ 1 mil - R$ 2 mil</option>
+                    <option value="option2">R$ 2 mil - R$ 4 mil</option>
+                    <option value="option3">R$ 4 mil - R$ 8 mil</option>
+                    <option value="option3">R$ 8 mil - R$ 10 mil</option>
+                    <option value="option3">Acima de R$ 10 mil</option>
                   </select>
 
                 </div>

@@ -18,7 +18,7 @@ export const Header = () => {
     const lenis = useLenis();
     const [open, setOpen] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
-    const tl = useRef<gsap.core.Timeline>();
+    const tl = useRef<gsap.core.Timeline>(null);
 
     useGSAP(() => {
         if (containerRef.current) {

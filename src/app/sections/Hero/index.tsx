@@ -26,6 +26,7 @@ const ARRAY2: StaticImageData[] = [...IMAGES2, ...IMAGES2];
 
 import { Marquee } from "@/app/components/Marquee";
 import { useLenis } from "lenis/react";
+import { ButtonComponent } from "@/app/components/ButtonComponent";
 
 export const Hero = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export const Hero = () => {
 
     useGSAP(() => {
         if(containerRef.current) {
-            gsap.timeline().from(".button-hero", {
+            gsap.timeline().from("#button-hero", {
                 opacity: 0,
                 y: 400,
                 duration: 1.5,
@@ -56,17 +57,15 @@ export const Hero = () => {
             <div className="container mx-auto">
                 <div className="md:flex md:justify-between md:align-end place-content-end md:pt-80 pt-40 md:px-10">
                     <div className="md:w-1/2 w-full">
-                        <ShuffleText as="h1" duration="1" className="shuffle-text xl:text-6xl md:text-6xl text-3xl md:mb-0 mb-4" stagger={0.02} >
+                        <ShuffleText as="h1" duration="1" className="shuffle-text xl:text-6xl md:text-6xl text-3xl md:mb-0 mb-4" stagger={0.03} >
                             Construindo e inovando no mundo da tecnologia
                         </ShuffleText>
                     </div>
                     <div className="block">
-                        <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium" stagger={0.002}>
+                        <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium" stagger={0.02}>
                             Criamos experiências digitais para projetos <br className="md:block hidden" />inovadores e consistentes, com foco no <br className="md:block hidden"/>crescimento de nossos clientes.
                         </ShuffleText>
-                        <button className="button-hero bg-black text-white md:text-base text-sm py-3 px-6 rounded-full" onClick={() => {
-                            lenis?.scrollTo("#about-section"); 
-                        }}>Conhecer mais</button>
+                        <ButtonComponent id="button-hero" onClick={() => lenis?.scrollTo("#about-section")}>Conhecer mais</ButtonComponent>
                     </div>
                 </div>
             </div>

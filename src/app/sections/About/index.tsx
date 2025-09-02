@@ -8,6 +8,7 @@ import Logo from "@/assets/logo-about.svg";
 import ShuffleText from "@/app/components/ShuffleText";
 import { useRef } from "react";
 import Link from "next/link";
+import { ButtonComponent } from "@/app/components/ButtonComponent";
 
 export const About = () => {
 
@@ -23,7 +24,7 @@ export const About = () => {
         });
         tl.from("#button-about", {
             opacity: 0,
-            y: 300,
+            y: 200,
             ease: "power4.out",
             duration: 1,
         }, 1).from("#line-about", {
@@ -46,14 +47,14 @@ export const About = () => {
                     <div className="w-full h-px bg-gray-300" id="line-about"></div>
                 </div>
                 <div className="md:w-[700px] ml-auto md:pr-[100px] w-full">
-                    <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl md:text-2xl text-2xl mb-6" stagger={0.005} >
+                    <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl md:text-2xl text-2xl mb-6" stagger={0.03} >
                     Somos um estúdio de design, tecnologia e criativa, pronta para atender qualquer tipo de cliente pequeno, médio e grande porte.
                     </ShuffleText>
-                    <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm text-gray-600 mb-6" stagger={0.005} >
+                    <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm text-gray-600 mb-6" stagger={0.03} >
                     Sempre com foco na experiência dos usuários, desenvolvemos e implementamos designs inovadores e relevantes, adaptados às demandas dinâmicas deste setor em constante evolução.
                     </ShuffleText>
                     <Link href="/contact">
-                        <button id="button-about" className="bg-black text-white md:text-base py-3 px-6 rounded-full">Entrar em contato</button>
+                        <ButtonComponent id="button-about" onClick={() => null}>Entrar em contato</ButtonComponent>
                     </Link>
                 </div>
             </div>

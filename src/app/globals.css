@@ -36,3 +36,52 @@ h5 {
 .shuffle-text .line {
   clip-path: polygon(0 0, 100% 0, 100% 120%, 0% 120%) !important;
 }
+
+.button--skoll {
+	overflow: hidden;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	font-weight: 500;
+}
+
+.button--skoll span {
+	display: block;
+	position: relative;
+}
+
+.button--skoll > span {
+	overflow: hidden;
+	/* mix-blend-mode: difference; */
+}
+
+.button-content:hover > span > span {
+	animation: MoveUpInitial 0.2s forwards, MoveUpEnd 0.2s forwards 0.2s;
+}
+
+@keyframes MoveUpInitial {
+  to {
+    transform: translate3d(105%, 0, 0); /* direita */
+  }
+}
+
+@keyframes MoveUpEnd {
+  from {
+    transform: translate3d(-100%, 0, 0); /* vem da esquerda */
+  }
+  to {
+    transform: translate3d(0, 0, 0); /* posição original */
+  }
+}
+
+/* @media (max-width: 768px) {
+  #menu-links {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    height: 100vh;
+    width: 100%;
+  }
+} */

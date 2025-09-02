@@ -12,6 +12,7 @@ import ShuffleText from "@/app/components/ShuffleText";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import { ButtonComponent } from "@/app/components/ButtonComponent";
 
 export const Contact = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -33,9 +34,9 @@ export const Contact = () => {
             stagger: 0.05,
         }, 1).from("#button-contact", {
             opacity: 0,
-            y: 300,
+            y: 200,
             ease: "power4.out",
-            duration: 1,
+            duration: 0.5,
         }, 1)
     }, [containerRef]);
 
@@ -68,7 +69,7 @@ export const Contact = () => {
                             Nos envie seu orçamento com seus dados e as informações de seu projeto para começarmos!
                         </ShuffleText>
                         <Link href="/contact">
-                            <button className="bg-black text-white md:text-base text-sm py-3 px-6 rounded-full" id="button-contact">Entrar em contato</button>
+                            <ButtonComponent id="button-contact" onClick={() => null}>Entrar em contato</ButtonComponent>
                         </Link>
                     </div>
                 </div>

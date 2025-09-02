@@ -41,15 +41,17 @@ export default function ShuffleText({
         
 
         if(containerRef.current) {
-            const SPLIT = SplitType.create(containerRef.current, { types: "lines,chars", wordClass: "words" });
-            gsap.from(SPLIT.chars, {
+            const SPLIT = SplitType.create(containerRef.current, { types: "lines,words", wordClass: "words" });
+            gsap.from(SPLIT.words , {
                 delay: delay,
                 y: 200,
+                rotation: 20,
                 ease: "power4.out",
                 duration: duration,
                 stagger: stagger,
+                
                 scrollTrigger: {
-                    trigger: SPLIT.chars,
+                    trigger: SPLIT.words,
                     start: "top bottom",
                     scrub: false,
                 }

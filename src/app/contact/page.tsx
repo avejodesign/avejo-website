@@ -17,7 +17,8 @@ export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState<{ name: string, email: string, phone: string, business: string, website: string, budget: string, deadline: string }>({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>("Entrar em contato");
+  const [successForm, setSuccessForm] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,6 +32,8 @@ export default function Contact() {
     emailjs.send("service_bmt5gmb", "template_1k6srcb", formData, "BdMC1QfhJ-HYXLcsg").then((response) => {
       console.log("EMAIL ENVIADO", response.status, response.text);
       setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
+      setStatus("Entrar em contato");
+      setSuccessForm(true);
     }, (err) => {
       console.log("Erro", err);
     })
@@ -107,47 +110,67 @@ export default function Contact() {
               <form
                 onSubmit={handleSubmit}
               >
-                <ShuffleText as="h2" duration="1" className="shuffle-text md:text-2xl text-xl pb-6 size-fit" stagger={0.002}>
-                  Dar início ao projeto
-                </ShuffleText>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Nome<span className="text-red-500 ">*</span></label>
-                  <input placeholder="Inserir nome" type="text" id="name" name="name" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
-                </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
-                  <input placeholder="Inserir seu melhor e-mail" type="email" id="email" name="email" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
-                </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
-                  <input placeholder="Inserir telefone" type="text" id="phone" name="phone" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
-                </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
-                  <input placeholder="Inserir nome da empresa" type="text" id="business" name="business" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
-                </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
-                  <input placeholder="https://sitedaempresa.com" type="text" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
-                </div>
-                <div className="mb-6 flex flex-col relative ">
-                  <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
-                  <select className="h-12 border rounded-full px-4" required id="budget" name="budget" value={formData.budget} onChange={handleChange}>
-                    <option value="" disabled>Selecione um orçamento</option>
-                    <option value="option1">R$ 1 mil - R$ 2 mil</option>
-                    <option value="option2">R$ 2 mil - R$ 4 mil</option>
-                    <option value="option3">R$ 4 mil - R$ 8 mil</option>
-                    <option value="option3">R$ 8 mil - R$ 10 mil</option>
-                    <option value="option3">Acima de R$ 10 mil</option>
-                  </select>
+                {successForm ? (
+                  <div className="text-center py-40">
+                    <div className="bg-black rounded-3xl p-6 w-[fit-content] m-auto mb-6">
+                      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M16.6251 3.10065L18.4588 4.66006C18.8584 4.99984 19.3547 5.20542 19.8775 5.24776L22.2767 5.44165C23.499 5.54043 24.4693 6.51075 24.5681 7.73301L24.7621 10.1323C24.8044 10.6551 25.0099 11.1514 25.3497 11.551L26.9091 13.3846C27.7035 14.3187 27.7035 15.691 26.9091 16.6251L25.3497 18.4588C25.0099 18.8584 24.8043 19.3547 24.762 19.8775L24.5681 22.2767C24.4693 23.499 23.499 24.4693 22.2767 24.5681L19.8775 24.7621C19.3547 24.8044 18.8584 25.0099 18.4588 25.3497L16.6251 26.9091C15.691 27.7035 14.3187 27.7035 13.3846 26.9091L11.551 25.3497C11.1514 25.0099 10.6551 24.8043 10.1323 24.762L7.73301 24.5681C6.51075 24.4693 5.54043 23.499 5.44165 22.2767L5.2477 19.8775C5.20536 19.3547 4.99978 18.8584 4.66 18.4588L3.10065 16.6251C2.30629 15.691 2.30629 14.3187 3.10065 13.3846L4.66006 11.551C4.99984 11.1514 5.20542 10.6551 5.24776 10.1323L5.44165 7.73301C5.54043 6.51075 6.51075 5.54043 7.73301 5.44165L10.1323 5.2477C10.6551 5.20536 11.1514 4.99978 11.551 4.66L13.3846 3.10065C14.3187 2.30629 15.691 2.30629 16.6251 3.10065ZM19.7071 10.534L13.75 16.5235L10.8838 13.6574L9.11624 15.4249L13.75 20.0587L21.4748 12.3016L19.7071 10.534Z" fill="white"/>
+                      </svg>
+                    </div>
+                    <ShuffleText as="h1" duration="1" className="shuffle-text md:text-2xl text-xl pb-2 size-fit m-auto" stagger={0.002}>
+                      Mensagem enviada com sucesso!
+                    </ShuffleText>
+                    <p className="text-sm mb-6">Obrigado por entrar em contato. Nossa <br />equipe responderá em breve.</p>
+                    <a href="https://www.instagram.com/avejodesign/">
+                      <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center w-[fit-content] m-auto">
+                        <InstagramSVG className="mr-2" /> @avejodesign
+                      </span>
+                    </a>
+                  </div>
+                ): (
+                  <>
+                    <ShuffleText as="h2" duration="1" className="shuffle-text md:text-2xl text-xl pb-6 size-fit" stagger={0.002}>
+                      Dar início ao projeto
+                    </ShuffleText>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Nome<span className="text-red-500 ">*</span></label>
+                      <input placeholder="Inserir nome" type="text" id="name" name="name" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
+                    </div>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">E-mail corporativo<span className="text-red-500 ">*</span></label>
+                      <input placeholder="Inserir seu melhor e-mail" type="email" id="email" name="email" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
+                    </div>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">Telefone (Whatsapp)<span className="text-red-500 ">*</span></label>
+                      <input placeholder="Inserir telefone" type="text" id="phone" name="phone" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
+                    </div>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">Qual empresa você representa?<span className="text-red-500 ">*</span></label>
+                      <input placeholder="Inserir nome da empresa" type="text" id="business" name="business" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
+                    </div>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">Tem website? se sim, insira a URL<span className="text-red-500 ">*</span></label>
+                      <input placeholder="https://sitedaempresa.com" type="text" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
+                    </div>
+                    <div className="mb-6 flex flex-col relative ">
+                      <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">Existe algum orçamento previsto para o projeto?<span className="text-red-500 ">*</span></label>
+                      <select className="h-12 border rounded-full px-4" required id="budget" name="budget" value={formData.budget} onChange={handleChange}>
+                        <option value="" disabled>Selecione um orçamento</option>
+                        <option value="option1">R$ 1 mil - R$ 2 mil</option>
+                        <option value="option2">R$ 2 mil - R$ 4 mil</option>
+                        <option value="option3">R$ 4 mil - R$ 8 mil</option>
+                        <option value="option3">R$ 8 mil - R$ 10 mil</option>
+                        <option value="option3">Acima de R$ 10 mil</option>
+                      </select>
 
-                </div>
-                <div className="mb-6 flex flex-col">
-                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum prazo de entrega a ser realizado?<span className="text-red-500 ">*</span></label>
-                  <input placeholder="Insira os dias ou meses" type="text" id="deadline" name="deadline" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
-                </div>
-                <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm text-sm py-3 px-6 rounded-full hover:opacity-60 transition">Entrar em contato</button>
-                {status && <p>{status}</p>}
+                    </div>
+                    <div className="mb-6 flex flex-col">
+                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Existe algum prazo de entrega a ser realizado?<span className="text-red-500 ">*</span></label>
+                      <input placeholder="Insira os dias ou meses" type="text" id="deadline" name="deadline" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
+                    </div>
+                    <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm py-3 px-6 rounded-full hover:opacity-60 transition">{status}</button>
+                  </>
+                )}
               </form>
             </div>
           </div>

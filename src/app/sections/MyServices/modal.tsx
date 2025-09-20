@@ -25,8 +25,6 @@ const scaleAnimation = {
     closed: {scale: 0, x:"-50%", y:"-50%", transition: {duration: 0.4, ease: [0.32, 0, 0.67, 0]}}
 }
 
-import "./style.css";
-
 export const Modal = ({modal}: Props) => {
     const { active, index } = modal || {active: false, index: 0};
     const modalContainer = useRef<HTMLDivElement>(null);
@@ -56,7 +54,7 @@ export const Modal = ({modal}: Props) => {
     return (
         <>
             
-            <motion.div ref={modalContainer} className="modalContainer " variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>
+            <motion.div ref={modalContainer} className="modalContainer" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>
                 <div style={{top: `${(index ?? 0) * -100 }%`}} className="modalSlider md:block hidden">
                     {
                         ARRAYIMAGES.map((image, index) => {

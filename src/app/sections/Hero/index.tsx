@@ -58,14 +58,14 @@ export const Hero = () => {
                 <div className="md:flex md:justify-between md:align-end place-content-end md:pt-80 pt-40 md:px-10">
                     <div className="md:w-1/2 w-full">
                         <ShuffleText as="h1" duration="1" className="shuffle-text xl:text-6xl md:text-6xl text-3xl md:mb-0 mb-4" stagger={0.03} >
-                            Construindo e inovando no mundo da tecnologia
+                            Building and innovating in the world of technology
                         </ShuffleText>
                     </div>
                     <div className="block">
                         <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium" stagger={0.02}>
-                            Criamos experiências digitais para projetos <br className="md:block hidden" />inovadores e consistentes, com foco no <br className="md:block hidden"/>crescimento de nossos clientes.
+                            We create digital experiences for innovative <br className="md:block hidden" />and consistent projects, focused on the <br className="md:block hidden"/>growth of our clients.
                         </ShuffleText>
-                        <ButtonComponent id="button-hero" onClick={() => lenis?.scrollTo("#about-section")}>Conhecer mais</ButtonComponent>
+                        <ButtonComponent id="button-hero" onClick={() => lenis?.scrollTo("#about-section")}>Learn more</ButtonComponent>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@ export const Hero = () => {
                                 key={index}
                                 style={{ width: src.width, height: src.height }}
                             >
-                                <Image src={src} alt="Projetos" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
+                                <Image src={src} alt="Projects" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
                             </div>
                         ))}
                     </Marquee>
@@ -89,7 +89,7 @@ export const Hero = () => {
                                 key={index}
                                 style={{ width: src.width, height: src.height }}
                             >
-                                <Image src={src} alt="Projetos" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
+                                <Image src={src} alt="Projects" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
                             </div>
                         ))}
                     </Marquee>

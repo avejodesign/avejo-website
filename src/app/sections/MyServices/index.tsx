@@ -8,20 +8,20 @@ import { Modal } from "./modal";
 
 const projects = [
     {
-        title: "Design de Produtos",
-        description: "Da concepção à execução, desenvolvemos interfaces e experiências que impulsionam produtos digitais.",
+        title: "Product Design",
+        description: "From concept to execution, we develop interfaces and experiences that drive digital products.",
     },
     {
-        title: "Desenvolvimento web",
-        description: "Construímos sites e aplicações web, focados em segurança, escalabilidade e experiência do usuário. ",
+        title: "Web Development",
+        description: "We build websites and web applications focused on security, scalability, and user experience.",
     },
     {
         title: "UX/UI Design",
-        description: "Nossos designs são pensados para aumentar a conversão e retenção aplicando usabilidade e interatividade.",
+        description: "Our designs are crafted to increase conversion and retention through usability and interactivity.",
     },
     {
         title: "Low/no Code",
-        description: "Ferramentas como Wordpress e Framer são rápidas e eficientes, para lançamentos de MVPs e produtos digitais. ",
+        description: "Tools like Wordpress and Framer are fast and efficient for launching MVPs and digital products.",
     },
 ]
 
@@ -50,10 +50,10 @@ export const MyServices = () => {
                 <div className="md:px-10">
                     <div className="md:flex justify-between items-center mb:mb-16 mb-8">
                         <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl text-3xl text-white mb:mb-0 mb-4" stagger={0.02}>
-                            Nossos serviços
+                            Our services
                         </ShuffleText>
                         <ShuffleText as="p" duration="1" className="shuffle-text text-sm text-gray-400" stagger={0.005}>
-                            *Passe o mouse
+                            *Hover
                         </ShuffleText>
                     </div>
                     {/* Services */}

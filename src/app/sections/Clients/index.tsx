@@ -39,7 +39,7 @@ export const Clients = () => {
         <div className="bg-black overflow-hidden py-20" id="clients">
             <div className="container md:px-10">
                 <ShuffleText as="h3" duration="1" className="shuffle-text xl:text-4xl text-2xl text-white mb-10" stagger={0.005} >
-                Alguns de nossos clientes
+                Some of our clients
                 </ShuffleText>
             </div>
             <div 
@@ -52,7 +52,7 @@ export const Clients = () => {
                             key={index}
                             style={{ width: src.width, height: src.height}}
                         >
-                            <Image style={{ width: src.width, height: src.height}} src={src} alt="Projetos" className="object-contain md:w-full w-52 md:p-2 p-1" />
+                            <Image style={{ width: src.width, height: src.height}} src={src} alt="Projects" className="object-contain md:w-full w-52 md:p-2 p-1" />
                         </div>
                     ))}
                 </Marquee>

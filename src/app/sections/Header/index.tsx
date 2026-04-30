@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useLenis } from "lenis/react";
 
 import gsap from "gsap";
@@ -19,6 +19,7 @@ export const Header = () => {
     const [open, setOpen] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
     const tl = useRef<gsap.core.Timeline>(null);
+    const [isVisible, setIsVisible] = useState(true);
 
     useGSAP(() => {
         if (containerRef.current) {
@@ -77,9 +78,36 @@ export const Header = () => {
         setOpen(v => !v);
     };
 
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
+        const handleScroll = () => {
+          const currentScrollY = window.scrollY;
+          // no topo sempre mostra
+          if (currentScrollY <= 10) {
+            setIsVisible(true);
+          } else if (currentScrollY > lastScrollY) {
+            // scroll para baixo -> esconde
+            setIsVisible(false);
+          } else {
+            // scroll para cima -> mostra
+            setIsVisible(true);
+          }
+          lastScrollY = currentScrollY;
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+      }, [containerRef?.current]);
     return (
-        <nav className="fixed z-50">
-            <div ref={containerRef} className="overflow-hidden fixed container z-10 top-4" style={{ left: "50%", transform: "translateX(-50%)" }}>
+        <nav className="fixed z-50 w-full">
+            <div
+                className="fixed container z-10 transition-[top] duration-700 ease-out"
+                style={{
+                    left: "50%",
+                    top: isVisible ? "1rem" : "-120px",
+                    transform: "translateX(-50%)",
+                }}
+            >
+                <div ref={containerRef} className="overflow-hidden">
                 <div className="md:px-10 md:h-auto h-[calc(100vh_-_2rem)]">
                     <div className="md:py-6 py-4 md:px-12 px-6 bg-white border border-gray-200 rounded-full flex justify-between">
                         <div>
@@ -90,17 +118,17 @@ export const Header = () => {
                         <ul className="md:flex hidden gap-10 " id="menu-links">
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#about-section");
-                            }}>Sobre</li>
+                            }}>About</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#button-about");
-                            }}>Clientes</li>
+                            }}>Clients</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#work-section");
-                            }}>Projetos</li>
+                            }}>Projects</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#services-section");
-                            }}>Serviços</li>
-                            <li className="text-base font-medium hover:opacity-60 transition-opacity"><Link href="/contact">Contato</Link></li>
+                            }}>Services</li>
+                            <li className="text-base font-medium hover:opacity-60 transition-opacity"><Link href="/contact">Contact</Link></li>
                         </ul>
                         <Menu className="md:hidden md:scale-[1] scale-[0.8]" onClick={toggleMenu} />
                         {/* <div className="flex items-center gap-4">
@@ -111,21 +139,21 @@ export const Header = () => {
                         <ul className="gap-4 flex flex-col mb-6 mt-2">
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#about-section");
-                            }}>Sobre</li>
+                            }}>About</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#button-about");
-                            }}>Clientes</li>
+                            }}>Clients</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#work-section");
-                            }}>Projetos</li>
+                            }}>Projects</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#services-section");
-                            }}>Serviços</li>
+                            }}>Services</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#contact-section");
-                            }}>Contato</li>
+                            }}>Contact</li>
                             <Link href="/contact">
-                                <ButtonComponent onClick={() => null}>Contate-nos</ButtonComponent>
+                                <ButtonComponent onClick={() => null}>Contact us</ButtonComponent>
                             </Link>
                         </ul>
                         <div className="flex flex-col gap-4">
@@ -168,6 +196,7 @@ export const Header = () => {
                         </div>
 
                     </div>
+                </div>
                 </div>
             </div>
         </nav>

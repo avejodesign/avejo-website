@@ -48,13 +48,13 @@ export const About = () => {
                 </div>
                 <div className="md:w-[700px] ml-auto md:pr-[100px] w-full">
                     <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl md:text-2xl text-2xl mb-6" stagger={0.03} >
-                    Somos um estúdio de design, tecnologia e criativa, pronta para atender qualquer tipo de cliente pequeno, médio e grande porte.
+                    We are a design, technology, and creative studio ready to support clients of all sizes.
                     </ShuffleText>
                     <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm text-gray-600 mb-6" stagger={0.03} >
-                    Sempre com foco na experiência dos usuários, desenvolvemos e implementamos designs inovadores e relevantes, adaptados às demandas dinâmicas deste setor em constante evolução.
+                    Always focused on user experience, we develop and implement innovative and relevant designs adapted to the dynamic demands of this constantly evolving industry.
                     </ShuffleText>
                     <Link href="/contact">
-                        <ButtonComponent id="button-about" onClick={() => null}>Entrar em contato</ButtonComponent>
+                        <ButtonComponent id="button-about" onClick={() => null}>Get in touch</ButtonComponent>
                     </Link>
                 </div>
             </div>

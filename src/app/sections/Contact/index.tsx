@@ -46,7 +46,7 @@ export const Contact = () => {
                 <div className="lg:flex justify-between items-end md:px-10 md:py-48 py-20">
                     <div className="w-full md:block flex flex-col-reverse">
                         <ShuffleText as="h2" duration="1" className="shuffle-text lg:text-6xl md:text-4xl text-3xl text-black lg:mr-64 mb-6" stagger={0.02}>
-                        Quer dar início ao seu projeto agora mesmo?
+                        Ready to kick off your project right now?
                         </ShuffleText>
                         <div className="flex flex-wrap gap-4" id="social-media-group">
                             <div className="social-media">
@@ -66,10 +66,10 @@ export const Contact = () => {
                     <div className="lg:w-1/3 w-full">
                         <Image src={LogoBg} alt="" className="md:block hidden absolute right-0 top-0 h-full z-[-1]"/>
                         <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm font-medium mb-6" stagger={0.005}>
-                            Nos envie seu orçamento com seus dados e as informações de seu projeto para começarmos!
+                            Send us your quote request with your details and project information so we can get started!
                         </ShuffleText>
                         <Link href="/contact">
-                            <ButtonComponent id="button-contact" onClick={() => null}>Entrar em contato</ButtonComponent>
+                            <ButtonComponent id="button-contact" onClick={() => null}>Get in touch</ButtonComponent>
                         </Link>
                     </div>
                 </div>

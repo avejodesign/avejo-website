@@ -12,7 +12,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Avejo Design",
-  description: "Criamos experiências digitais para projetos inovadores e consistentes, com foco no crescimento de nossos clientes.",
+  description: "We create digital experiences for innovative and consistent projects, focused on our clients' growth.",
 };
 
 export default function RootLayout({

@@ -9,14 +9,19 @@ import Image, { StaticImageData } from "next/image";
 
 import ShuffleText from "@/app/components/ShuffleText";
 
-import Image01 from "../../../assets/hero-images/image-01.png";
-import Image02 from "@/assets/hero-images/image-02.png";
-import Image03 from "@/assets/hero-images/image-03.png";
-import Image04 from "@/assets/hero-images/image-04.png";
-import Image05 from "@/assets/hero-images/image-05.png";
-import Image06 from "@/assets/hero-images/image-06.png";
-import Image07 from "@/assets/hero-images/image-07.png";
-import Image08 from "@/assets/hero-images/image-08.png";
+import Image01 from "@/assets/hero-images/image-news-01.png";
+import Image02 from "@/assets/hero-images/image-news-02.png";
+import Image03 from "@/assets/hero-images/image-news-03.png";
+import Image04 from "@/assets/hero-images/image-news-04.png";
+import Image05 from "@/assets/hero-images/image-news-05.png";
+import Image06 from "@/assets/hero-images/image-news-06.png";
+import Image07 from "@/assets/hero-images/image-news-07.png";
+import Image08 from "@/assets/hero-images/image-news-08.png";
+
+import Project01 from "@/assets/projects-images/awam-agency-project.png";
+import Project02 from "@/assets/projects-images/vertex-pure-matter.png";
+import Project03 from "@/assets/projects-images/mytech.png";
+import Project04 from "@/assets/projects-images/bankook.png";
 
 const IMAGES: StaticImageData[] = [Image01, Image02, Image03, Image04, Image01, Image02, Image03, Image04];
 const IMAGES2: StaticImageData[] = [Image05, Image06, Image07, Image08, Image05, Image06, Image07, Image08];

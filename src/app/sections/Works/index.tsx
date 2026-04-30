@@ -50,14 +50,14 @@ export const Works = () => {
                 </div>
                 <div className="works grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-6 md:gap-y-14">
                     <div className="flex flex-col gap-2">
-                        <a href="https://mytech-platform.netlify.app/" target="_blank" className="hover:opacity-90 transition">
+                        <a href="https://awam.agency" target="_blank" className="hover:opacity-90 transition">
                             <Image
                                 src={Project01}
                                 alt=""
                                 className="w-full aspect-[4/3] object-cover border border-black/10"
                             />
                         </a>
-                        <a href="https://mytech-platform.netlify.app/" target="_blank" className="hover:opacity-90 transition">
+                        <a href="https://awam.agency" target="_blank" className="hover:opacity-90 transition">
                             <h3 className="md:text-2xl text-1xl leading-tight">awam™ - German Marketing Agency</h3>
                         </a>
                         <div className="flex flex-wrap gap-2">
@@ -70,7 +70,7 @@ export const Works = () => {
 
                     <div className="flex flex-col gap-2">
                         <a
-                            href="https://www.behance.net/gallery/161875863/Gametrim-Tournament-Game-PC-Mobile-Web-UXUI"
+                            href="https://dribbble.com/shots/27214742-VERTEX-Architecture-Website-Concept"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >
@@ -81,7 +81,7 @@ export const Works = () => {
                             />
                         </a>
                         <a
-                            href="https://www.behance.net/gallery/161875863/Gametrim-Tournament-Game-PC-Mobile-Web-UXUI"
+                            href="https://dribbble.com/shots/27214742-VERTEX-Architecture-Website-Concept"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >
@@ -116,7 +116,7 @@ export const Works = () => {
 
                     <div className="flex flex-col gap-2">
                         <a
-                            href="https://www.behance.net/gallery/161875863/Gametrim-Tournament-Game-PC-Mobile-Web-UXUI"
+                            href="https://dribbble.com/shots/25702861-Bankook-Landing-page-para-banco-digital"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >
@@ -127,7 +127,7 @@ export const Works = () => {
                             />
                         </a>
                         <a
-                            href="https://www.behance.net/gallery/161875863/Gametrim-Tournament-Game-PC-Mobile-Web-UXUI"
+                            href="https://dribbble.com/shots/25702861-Bankook-Landing-page-para-banco-digital"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >

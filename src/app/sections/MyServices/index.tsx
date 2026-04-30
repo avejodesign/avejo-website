@@ -5,29 +5,12 @@ import { useGSAP } from "@gsap/react";
 
 import ShuffleText from "@/app/components/ShuffleText";
 import { Modal } from "./modal";
-
-const projects = [
-    {
-        title: "Product Design",
-        description: "From concept to execution, we develop interfaces and experiences that drive digital products.",
-    },
-    {
-        title: "Web Development",
-        description: "We build websites and web applications focused on security, scalability, and user experience.",
-    },
-    {
-        title: "UX/UI Design",
-        description: "Our designs are crafted to increase conversion and retention through usability and interactivity.",
-    },
-    {
-        title: "Low/no Code",
-        description: "Tools like Wordpress and Framer are fast and efficient for launching MVPs and digital products.",
-    },
-]
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 export const MyServices = () => {
     const [ modal, setModal ] = useState<{ active: boolean; index: number }>({active: false, index: 0})
     const containerRef = useRef<HTMLDivElement>(null);
+    const { t } = useLanguage();
 
     useGSAP(() => {
         gsap.from("#services .service", {
@@ -50,15 +33,15 @@ export const MyServices = () => {
                 <div className="md:px-10">
                     <div className="md:flex justify-between items-center mb:mb-16 mb-8">
                         <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl text-3xl text-white mb:mb-0 mb-4" stagger={0.02}>
-                            Our services
+                            {t.services.title}
                         </ShuffleText>
                         <ShuffleText as="p" duration="1" className="shuffle-text text-sm text-gray-400" stagger={0.005}>
-                            *Hover
+                            {t.services.hover}
                         </ShuffleText>
                     </div>
                     {/* Services */}
                     <div id="services" >
-                        {projects.map((project, index) => {
+                        {t.services.items.map((project, index) => {
                             return (
                                 <div 
                                     className="service" 

@@ -10,6 +10,7 @@ import { useGSAP } from "@gsap/react";
 import Logo from "@/assets/logo.svg";
 import Menu from "@/assets/menu.svg";
 import { ButtonComponent } from "@/app/components/ButtonComponent";
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(useGSAP);
 
@@ -20,6 +21,7 @@ export const Header = () => {
     const panelRef = useRef<HTMLDivElement>(null);
     const tl = useRef<gsap.core.Timeline>(null);
     const [isVisible, setIsVisible] = useState(true);
+    const { lang, setLang, t } = useLanguage();
 
     useGSAP(() => {
         if (containerRef.current) {
@@ -96,7 +98,7 @@ export const Header = () => {
         };
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-      }, [containerRef?.current]);
+      }, []);
     return (
         <nav className="fixed z-50 w-full">
             <div
@@ -118,17 +120,28 @@ export const Header = () => {
                         <ul className="md:flex hidden gap-10 " id="menu-links">
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#about-section");
-                            }}>About</li>
+                            }}>{t.header.about}</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#button-about");
-                            }}>Clients</li>
+                            }}>{t.header.clients}</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#work-section");
-                            }}>Projects</li>
+                            }}>{t.header.projects}</li>
                             <li className="cursor-pointer text-base font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#services-section");
-                            }}>Services</li>
-                            <li className="text-base font-medium hover:opacity-60 transition-opacity"><Link href="/contact">Contact</Link></li>
+                            }}>{t.header.services}</li>
+                            <li className="text-base font-medium hover:opacity-60 transition-opacity"><Link href="/contact">{t.header.contact}</Link></li>
+                            <li className="text-base font-medium hover:opacity-60 transition-opacity">
+                                <select
+                                    aria-label="Select language"
+                                    value={lang}
+                                    onChange={(e) => setLang(e.target.value as "pt" | "en")}
+                                    className="bg-transparent text-base font-medium cursor-pointer outline-none"
+                                >
+                                    <option value="en">EN</option>
+                                    <option value="pt">PT</option>
+                                </select>
+                            </li>
                         </ul>
                         <Menu className="md:hidden md:scale-[1] scale-[0.8]" onClick={toggleMenu} />
                         {/* <div className="flex items-center gap-4">
@@ -139,21 +152,32 @@ export const Header = () => {
                         <ul className="gap-4 flex flex-col mb-6 mt-2">
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#about-section");
-                            }}>About</li>
+                            }}>{t.header.about}</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#button-about");
-                            }}>Clients</li>
+                            }}>{t.header.clients}</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#work-section");
-                            }}>Projects</li>
+                            }}>{t.header.projects}</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#services-section");
-                            }}>Services</li>
+                            }}>{t.header.services}</li>
                             <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity" onClick={() => {
                                 lenis?.scrollTo("#contact-section");
-                            }}>Contact</li>
+                            }}>{t.header.contact}</li>
+                            <li className="cursor-pointer text-xl font-medium hover:opacity-60 transition-opacity">
+                                <select
+                                    aria-label="Select language"
+                                    value={lang}
+                                    onChange={(e) => setLang(e.target.value as "pt" | "en")}
+                                    className="bg-transparent text-xl font-medium cursor-pointer outline-none"
+                                >
+                                    <option value="en">EN</option>
+                                    <option value="pt">PT</option>
+                                </select>
+                            </li>
                             <Link href="/contact">
-                                <ButtonComponent onClick={() => null}>Contact us</ButtonComponent>
+                                <ButtonComponent onClick={() => null}>{t.header.contactUs}</ButtonComponent>
                             </Link>
                         </ul>
                         <div className="flex flex-col gap-4">

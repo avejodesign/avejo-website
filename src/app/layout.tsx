@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { WhatsappButton } from './sections/WhatsappButton';
+import { LanguageProvider } from "./i18n/LanguageContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,7 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased overflow-x-hidden`}>{children} <WhatsappButton /></body>
+      <body className={`${poppins.className} antialiased overflow-x-hidden`}>
+        <LanguageProvider>
+          {children}
+          <WhatsappButton />
+        </LanguageProvider>
+      </body>
       <GoogleAnalytics gaId="G-8FGB4YZD57" />
       
     </html>

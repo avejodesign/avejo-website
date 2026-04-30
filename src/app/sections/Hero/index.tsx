@@ -18,11 +18,6 @@ import Image06 from "@/assets/hero-images/image-news-06.png";
 import Image07 from "@/assets/hero-images/image-news-07.png";
 import Image08 from "@/assets/hero-images/image-news-08.png";
 
-import Project01 from "@/assets/projects-images/awam-agency-project.png";
-import Project02 from "@/assets/projects-images/vertex-pure-matter.png";
-import Project03 from "@/assets/projects-images/mytech.png";
-import Project04 from "@/assets/projects-images/bankook.png";
-
 const IMAGES: StaticImageData[] = [Image01, Image02, Image03, Image04, Image01, Image02, Image03, Image04];
 const IMAGES2: StaticImageData[] = [Image05, Image06, Image07, Image08, Image05, Image06, Image07, Image08];
 
@@ -32,10 +27,12 @@ const ARRAY2: StaticImageData[] = [...IMAGES2, ...IMAGES2];
 import { Marquee } from "@/app/components/Marquee";
 import { useLenis } from "lenis/react";
 import { ButtonComponent } from "@/app/components/ButtonComponent";
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 export const Hero = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const lenis = useLenis();
+    const { t } = useLanguage();
 
     useGSAP(() => {
         if(containerRef.current) {
@@ -63,14 +60,14 @@ export const Hero = () => {
                 <div className="md:flex md:justify-between md:align-end place-content-end md:pt-80 pt-40 md:px-10">
                     <div className="md:w-1/2 w-full">
                         <ShuffleText as="h1" duration="1" className="shuffle-text xl:text-6xl md:text-6xl text-3xl md:mb-0 mb-4" stagger={0.03} >
-                            Building and innovating in the world of technology
+                            {t.hero.titleLine1} <br className="md:block hidden" />{t.hero.titleLine2}
                         </ShuffleText>
                     </div>
                     <div className="block">
                         <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium" stagger={0.02}>
-                            We create digital experiences for innovative <br className="md:block hidden" />and consistent projects, focused on the <br className="md:block hidden"/>growth of our clients.
+                            {t.hero.descriptionLine1} <br className="md:block hidden" />{t.hero.descriptionLine2} <br className="md:block hidden"/>{t.hero.descriptionLine3}
                         </ShuffleText>
-                        <ButtonComponent id="button-hero" onClick={() => lenis?.scrollTo("#about-section")}>Learn more</ButtonComponent>
+                        <ButtonComponent id="button-hero" onClick={() => lenis?.scrollTo("#about-section")}>{t.hero.cta}</ButtonComponent>
                     </div>
                 </div>
             </div>
@@ -83,7 +80,7 @@ export const Hero = () => {
                                 key={index}
                                 style={{ width: src.width, height: src.height }}
                             >
-                                <Image src={src} alt="Projects" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
+                                <Image src={src} alt={t.hero.projectsAlt} style={{ width: src.width, height: src.height }} className="object-contain w-96" />
                             </div>
                         ))}
                     </Marquee>
@@ -94,7 +91,7 @@ export const Hero = () => {
                                 key={index}
                                 style={{ width: src.width, height: src.height }}
                             >
-                                <Image src={src} alt="Projects" style={{ width: src.width, height: src.height }} className="object-contain w-96" />
+                                <Image src={src} alt={t.hero.projectsAlt} style={{ width: src.width, height: src.height }} className="object-contain w-96" />
                             </div>
                         ))}
                     </Marquee>

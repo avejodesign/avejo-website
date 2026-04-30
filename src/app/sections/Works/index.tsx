@@ -70,7 +70,7 @@ export const Works = () => {
 
                     <div className="flex flex-col gap-2">
                         <a
-                            href="https://dribbble.com/shots/27214742-VERTEX-Architecture-Website-Concept"
+                            href="https://vertex-website.netlify.app/"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >
@@ -81,7 +81,7 @@ export const Works = () => {
                             />
                         </a>
                         <a
-                            href="https://dribbble.com/shots/27214742-VERTEX-Architecture-Website-Concept"
+                            href="https://vertex-website.netlify.app/"
                             target="_blank"
                             className="hover:opacity-90 transition"
                         >

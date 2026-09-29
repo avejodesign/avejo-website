@@ -9,10 +9,12 @@ import ShuffleText from "@/app/components/ShuffleText";
 import { useRef } from "react";
 import Link from "next/link";
 import { ButtonComponent } from "@/app/components/ButtonComponent";
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 export const About = () => {
 
     const containerRef = useRef<HTMLDivElement>(null);
+    const { t } = useLanguage();
 
     useGSAP(() => {
         const tl = gsap.timeline({
@@ -48,13 +50,13 @@ export const About = () => {
                 </div>
                 <div className="md:w-[700px] ml-auto md:pr-[100px] w-full">
                     <ShuffleText as="h2" duration="1" className="shuffle-text xl:text-4xl md:text-2xl text-2xl mb-6" stagger={0.03} >
-                    We are a design, technology, and creative studio ready to support clients of all sizes.
+                    {t.about.title}
                     </ShuffleText>
                     <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm text-gray-600 mb-6" stagger={0.03} >
-                    Always focused on user experience, we develop and implement innovative and relevant designs adapted to the dynamic demands of this constantly evolving industry.
+                    {t.about.description}
                     </ShuffleText>
                     <Link href="/contact">
-                        <ButtonComponent id="button-about" onClick={() => null}>Get in touch</ButtonComponent>
+                        <ButtonComponent id="button-about" onClick={() => null}>{t.about.cta}</ButtonComponent>
                     </Link>
                 </div>
             </div>

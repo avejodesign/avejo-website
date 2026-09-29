@@ -8,16 +8,18 @@ import { Footer } from "../sections/Footer";
 import { Header } from "../sections/Header";
 
 import InstagramSVG from "@/assets/contact-page/mdi_instagram.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactLenis from "lenis/react";
 
 import emailjs from "@emailjs/browser";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   const [formData, setFormData] = useState<{ name: string, email: string, phone: string, business: string, website: string, budget: string, deadline: string }>({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
-  const [status, setStatus] = useState<string>("Get in touch");
+  const [status, setStatus] = useState<string>(t.contactPage.statusIdle);
   const [successForm, setSuccessForm] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -27,12 +29,12 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("Sending...");
+    setStatus(t.contactPage.statusSending);
 
     emailjs.send("service_bmt5gmb", "template_1k6srcb", formData, "BdMC1QfhJ-HYXLcsg").then((response) => {
       console.log("EMAIL ENVIADO", response.status, response.text);
       setFormData({ name: "", email: "", phone: "", business: "", website: "", budget: "", deadline: "" });
-      setStatus("Get in touch");
+      setStatus(t.contactPage.statusIdle);
       setSuccessForm(true);
     }, (err) => {
       console.log("Erro", err);
@@ -68,6 +70,10 @@ export default function Contact() {
     }, 0)
   }, [containerRef]);
 
+  useEffect(() => {
+    setStatus(t.contactPage.statusIdle);
+  }, [t.contactPage.statusIdle]);
+
   return (
     <ReactLenis root>
       <Header />
@@ -75,13 +81,13 @@ export default function Contact() {
         <div className="lg:flex justify-between md:px-10">
           <div className="md:flex-1 w-full">
             <ShuffleText as="h1" duration="1" className="shuffle-text xl:text-5xl md:text-5xl text-4xl mb-4" stagger={0.02} >
-              Shall we build together?
+              {t.contactPage.title}
             </ShuffleText>
             <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium" stagger={0.002}>
-              Your project crafted with expertise and experience to deliver the best in the market!
+              {t.contactPage.subtitle}
             </ShuffleText>
             <ShuffleText as="h3" duration="1" className="shuffle-text md:text-xl text-lg md:pb-4 pb-2 size-fit font-medium" stagger={0.002}>
-              Contact us
+              {t.contactPage.contactUs}
             </ShuffleText>
             <div className="flex flex-col items-start gap-4 options-contact mb-8">
               <a href="mailto:avejo.design@gmail.com">
@@ -118,9 +124,9 @@ export default function Contact() {
                       </svg>
                     </div>
                     <ShuffleText as="h1" duration="1" className="shuffle-text md:text-2xl text-xl pb-2 size-fit m-auto" stagger={0.002}>
-                      Message sent successfully!
+                      {t.contactPage.successTitle}
                     </ShuffleText>
-                    <p className="text-sm mb-6">Thanks for reaching out. Our <br />team will reply soon.</p>
+                    <p className="text-sm mb-6">{t.contactPage.successDescriptionLine1}<br />{t.contactPage.successDescriptionLine2}</p>
                     <a href="https://www.instagram.com/avejodesign/">
                       <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center w-[fit-content] m-auto">
                         <InstagramSVG className="mr-2" /> @avejodesign
@@ -130,43 +136,43 @@ export default function Contact() {
                 ): (
                   <>
                     <ShuffleText as="h2" duration="1" className="shuffle-text md:text-2xl text-xl pb-6 size-fit" stagger={0.002}>
-                      Start your project
+                      {t.contactPage.formTitle}
                     </ShuffleText>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Name<span className="text-red-500 ">*</span></label>
-                      <input placeholder="Enter name" type="text" id="name" name="name" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
+                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.name}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.namePlaceholder} type="text" id="name" name="name" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.name} />
                     </div>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">Business email<span className="text-red-500 ">*</span></label>
-                      <input placeholder="Enter your best email" type="email" id="email" name="email" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
+                      <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.email}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.emailPlaceholder} type="email" id="email" name="email" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.email} />
                     </div>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">Phone (WhatsApp)<span className="text-red-500 ">*</span></label>
-                      <input placeholder="Enter phone number" type="text" id="phone" name="phone" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
+                      <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.phone}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.phonePlaceholder} type="text" id="phone" name="phone" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.phone} />
                     </div>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">Which company do you represent?<span className="text-red-500 ">*</span></label>
-                      <input placeholder="Enter company name" type="text" id="business" name="business" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
+                      <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.business}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.businessPlaceholder} type="text" id="business" name="business" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.business} />
                     </div>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">Do you have a website? If yes, enter the URL<span className="text-red-500 ">*</span></label>
-                      <input placeholder="https://yourcompanysite.com" type="text" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
+                      <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.website}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.websitePlaceholder} type="text" id="website" name="website" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.website} />
                     </div>
                     <div className="mb-6 flex flex-col relative ">
-                      <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">Is there a planned budget for the project?<span className="text-red-500 ">*</span></label>
+                      <label htmlFor="select" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.budget}<span className="text-red-500 ">*</span></label>
                       <select className="h-12 border rounded-full px-4" required id="budget" name="budget" value={formData.budget} onChange={handleChange}>
-                        <option value="" disabled>Select a budget range</option>
-                        <option value="option1">R$ 1k - R$ 2k</option>
-                        <option value="option2">R$ 2k - R$ 4k</option>
-                        <option value="option3">R$ 4k - R$ 8k</option>
-                        <option value="option3">R$ 8k - R$ 10k</option>
-                        <option value="option3">Above R$ 10k</option>
+                        <option value="" disabled>{t.contactPage.fields.budgetPlaceholder}</option>
+                        <option value="option1">{t.contactPage.budgetOptions[0]}</option>
+                        <option value="option2">{t.contactPage.budgetOptions[1]}</option>
+                        <option value="option3">{t.contactPage.budgetOptions[2]}</option>
+                        <option value="option4">{t.contactPage.budgetOptions[3]}</option>
+                        <option value="option5">{t.contactPage.budgetOptions[4]}</option>
                       </select>
 
                     </div>
                     <div className="mb-6 flex flex-col">
-                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">Do you have a delivery deadline?<span className="text-red-500 ">*</span></label>
-                      <input placeholder="Enter days or months" type="text" id="deadline" name="deadline" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
+                      <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">{t.contactPage.fields.deadline}<span className="text-red-500 ">*</span></label>
+                      <input placeholder={t.contactPage.fields.deadlinePlaceholder} type="text" id="deadline" name="deadline" required className="h-12 border rounded-full px-4" onChange={handleChange} value={formData.deadline} />
                     </div>
                     <button type="submit" className="button-hero w-full bg-black text-white md:md:text-base text-sm py-3 px-6 rounded-full hover:opacity-60 transition">{status}</button>
                   </>

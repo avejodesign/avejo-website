@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/app/sections/Header";
@@ -8,12 +9,13 @@ import { projects, getProjectBySlug } from "@/app/data/projects";
 import { useLanguage } from "@/app/i18n/LanguageContext";
 
 type ProjectPageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default function ProjectDetailsPage({ params }: ProjectPageProps) {
+  const { slug } = use(params);
   const { lang } = useLanguage();
-  const project = getProjectBySlug(params.slug);
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     return (

@@ -28,38 +28,32 @@ const scaleAnimation = {
 export const Modal = ({modal}: Props) => {
     const { active, index } = modal || {active: false, index: 0};
     const modalContainer = useRef<HTMLDivElement>(null);
-    const cursor = useRef<HTMLDivElement>(null);
-    const cursorLabel = useRef<HTMLDivElement>(null);
     
-    useGSAP( () => {
+    useGSAP(() => {
+        if (!modalContainer.current) {
+            return;
+        }
+
         const xMoveContainer = gsap.quickTo(modalContainer.current, "left", {duration: 0.8, ease: "power3"})
         const yMoveContainer = gsap.quickTo(modalContainer.current, "top", {duration: 0.8, ease: "power3"})
-        //Move cursor
-        const xMoveCursor = gsap.quickTo(cursor.current, "left", {duration: 0.5, ease: "power3"})
-        const yMoveCursor = gsap.quickTo(cursor.current, "top", {duration: 0.5, ease: "power3"})
-        //Move cursor label
-        const xMoveCursorLabel = gsap.quickTo(cursorLabel.current, "left", {duration: 0.45, ease: "power3"})
-        const yMoveCursorLabel = gsap.quickTo(cursorLabel.current, "top", {duration: 0.45, ease: "power3"})
-        
-        window.addEventListener('mousemove', (e) => {
+
+        const onMouseMove = (e: MouseEvent) => {
             const { pageX, pageY } = e;
             xMoveContainer(pageX)
             yMoveContainer(pageY)
-            xMoveCursor(pageX)
-            yMoveCursor(pageY)
-            xMoveCursorLabel(pageX)
-            yMoveCursorLabel(pageY)
-        })
+        };
+
+        window.addEventListener("mousemove", onMouseMove);
+        return () => window.removeEventListener("mousemove", onMouseMove);
     }, [])
     return (
         <>
-            
             <motion.div ref={modalContainer} className="modalContainer" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>
                 <div style={{top: `${(index ?? 0) * -100 }%`}} className="modalSlider md:block hidden">
                     {
                         ARRAYIMAGES.map((image, index) => {
                             return  <div className="modal" key={index}>
-                                <Image src={image}height={0} alt="image"/>
+                                <Image src={image} height={0} alt="image"/>
                             </div>
                         })
                     }

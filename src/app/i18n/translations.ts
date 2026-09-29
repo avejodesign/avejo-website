@@ -32,15 +32,18 @@ export const translations = {
     works: {
       titleLine1: "Selected",
       titleLine2: "Projects",
+      description:
+        "A selection of recent work across design, technology, and digital experiences.",
       cta: "Get in touch",
       tags: {
         codeEdition: "Code Edition",
         landingPage: "Landing Page",
       },
       items: [
-        "awam - German Marketing Agency",
-        "VERTEX - Brutalism Architecture",
+        "OOH Brasil - Outdoor Advertising",
         "MYTECH - Blockchain Platform Exchange",
+        "awam - German Marketing Agency",
+        "Vertex - Website for Architecture",
         "Bankook - Landing Page for Digital Bank",
       ],
     },
@@ -152,15 +155,18 @@ export const translations = {
     works: {
       titleLine1: "Projetos",
       titleLine2: "Selecionados",
+      description:
+        "Uma seleção de trabalhos recentes em design, tecnologia e experiências digitais.",
       cta: "Entrar em contato",
       tags: {
         codeEdition: "Edicao de Codigo",
         landingPage: "Pagina de Landing",
       },
       items: [
-        "awam - Agencia de Marketing Alema",
-        "VERTEX - Arquitetura Brutalista",
+        "OOH Brasil - Publicidade Outdoor",
         "MYTECH - Plataforma de Exchange Blockchain",
+        "awam - Agencia de Marketing Alemã",
+        "Vertex - Website para Arquitetura",
         "Bankook - Landing Page para Banco Digital",
       ],
     },

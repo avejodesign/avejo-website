@@ -7,7 +7,7 @@ import ShuffleText from "@/app/components/ShuffleText";
 
 import Image, { StaticImageData } from "next/image";
 import Project01 from "@/assets/projects-images/awam-agency-project-3.png";
-import Project02 from "@/assets/projects-images/vertex-pure-matter.png";
+import Project02 from "@/assets/projects-images/vertex-pure-matter-2.png";
 import Project03 from "@/assets/projects-images/mytech-2.png";
 import Project04 from "@/assets/projects-images/bankook-2.png";
 import Project05 from "@/assets/projects-images/ooh-brasil-2.png";
@@ -37,7 +37,7 @@ export const Works = () => {
             title: t.works.items[0],
             location: "Belo Horizonte, Minas Gerais",
             tags: ["UX/UI Design", "Web Development", "GSAP", "Advertising", "Outdoor"],
-            layout: "lg:col-span-6 lg:col-start-1 lg:row-start-1",
+            layout: "lg:col-span-7 lg:col-start-1 lg:row-start-1",
         },
         {
             // Linha 1 – direita, menor e deslocado para baixo
@@ -46,7 +46,7 @@ export const Works = () => {
             title: t.works.items[1],
             location: "New York, United States",
             tags: ["Web Development", "Crypto", "Blockchain"],
-            layout: "lg:col-span-5 lg:col-start-7 lg:row-start-1 lg:mt-[210px] lg:ml-[30px]",
+            layout: "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mt-[450px] lg:ml-[30px]",
         },
         {
             // Linha 2 – centralizado, grande
@@ -55,7 +55,7 @@ export const Works = () => {
             title: t.works.items[2],
             location: "Berlin, Germany",
             tags: ["Marketing Agency", "Advertising", "Social Media"],
-            layout: "lg:col-span-7 lg:col-start-3 lg:row-start-2",
+            layout: "lg:col-span-6 lg:col-start-4 lg:row-start-2",
         },
         {
             // Linha 3 – esquerda, menor
@@ -73,7 +73,7 @@ export const Works = () => {
             title: t.works.items[4],
             location: "São Paulo, Brazil",
             tags: ["Landing Page", "Digital Bank", "GSAP", "Dashboard"],
-            layout: "lg:col-span-7 lg:col-start-5 lg:row-start-4",
+            layout: "lg:col-span-7 lg:col-start-6 lg:row-start-4",
         },
     ];
 

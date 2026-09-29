@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -33,17 +34,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const setLang = (next: Language) => {
+  const setLang = useCallback((next: Language) => {
     if (next === lang) return;
     window.localStorage.setItem(STORAGE_KEY, next);
     setLangState(next);
     window.location.reload();
-  };
+  }, [lang]);
 
-  const toggleLang = () => {
-    const next = lang === "en" ? "pt" : "en";
-    setLang(next);
-  };
+  const toggleLang = useCallback(() => {
+    setLang(lang === "en" ? "pt" : "en");
+  }, [lang, setLang]);
 
   const value = useMemo(
     () => ({
@@ -52,7 +52,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       toggleLang,
       t: translations[lang],
     }),
-    [lang],
+    [lang, setLang, toggleLang],
   );
 
   return (

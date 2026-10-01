@@ -1,0 +1,353 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import emailjs from "@emailjs/browser";
+
+import ShuffleText from "@/app/components/ShuffleText";
+import InstagramSVG from "@/assets/contact-page/mdi_instagram.svg";
+import { useLanguage } from "@/app/i18n/LanguageContext";
+
+export const ContactForm = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
+
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    phone: string;
+    business: string;
+    website: string;
+    budget: string;
+    deadline: string;
+  }>({
+    name: "",
+    email: "",
+    phone: "",
+    business: "",
+    website: "",
+    budget: "",
+    deadline: "",
+  });
+  const [status, setStatus] = useState<string>(t.contactPage.statusIdle);
+  const [successForm, setSuccessForm] = useState<boolean>(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus(t.contactPage.statusSending);
+
+    emailjs.send("service_bmt5gmb", "template_1k6srcb", formData, "BdMC1QfhJ-HYXLcsg").then(
+      (response) => {
+        console.log("EMAIL ENVIADO", response.status, response.text);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          business: "",
+          website: "",
+          budget: "",
+          deadline: "",
+        });
+        setStatus(t.contactPage.statusIdle);
+        setSuccessForm(true);
+      },
+      (err) => {
+        console.log("Erro", err);
+      }
+    );
+  };
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top bottom",
+        scrub: false,
+      },
+    });
+    tl.from(
+      ".options-contact a",
+      {
+        opacity: 0,
+        x: -200,
+        ease: "power4.inOut",
+        duration: 1,
+        stagger: 0.2,
+      },
+      0
+    )
+      .from(
+        ".form-contact",
+        {
+          opacity: 0,
+          y: 200,
+          ease: "power4.inOut",
+          duration: 1,
+        },
+        0
+      )
+      .from(
+        ".form-contact form > div",
+        {
+          opacity: 0,
+          y: 200,
+          ease: "power4.inOut",
+          duration: 1,
+          stagger: 0.1,
+        },
+        0
+      );
+  }, [containerRef]);
+
+  useEffect(() => {
+    setStatus(t.contactPage.statusIdle);
+  }, [t.contactPage.statusIdle]);
+
+  return (
+    <div className="lg:flex justify-between md:px-10" ref={containerRef}>
+      <div className="md:flex-1 w-full">
+        <ShuffleText
+          as="h1"
+          duration="1"
+          className="shuffle-text xl:text-5xl md:text-5xl text-4xl mb-4"
+          stagger={0.02}
+        >
+          {t.contactPage.title}
+        </ShuffleText>
+        <ShuffleText
+          as="p"
+          duration="1"
+          className="shuffle-text md:text-base text-sm pb-6 size-fit font-medium"
+          stagger={0.002}
+        >
+          {t.contactPage.subtitle}
+        </ShuffleText>
+        <ShuffleText
+          as="h3"
+          duration="1"
+          className="shuffle-text md:text-xl text-lg md:pb-4 pb-2 size-fit font-medium"
+          stagger={0.002}
+        >
+          {t.contactPage.contactUs}
+        </ShuffleText>
+        <div className="flex flex-col items-start gap-4 options-contact mb-8">
+          <a href="mailto:ricardo@avejo.com.br">
+            <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center">
+              <svg
+                className="mr-2"
+                width="12"
+                height="10"
+                viewBox="0 0 12 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.166992 1.49998C0.166992 1.19056 0.289908 0.893814 0.508701 0.675022C0.727493 0.456229 1.02424 0.333313 1.33366 0.333313H10.667C10.9764 0.333313 11.2732 0.456229 11.492 0.675022C11.7107 0.893814 11.8337 1.19056 11.8337 1.49998V8.49998C11.8337 8.8094 11.7107 9.10614 11.492 9.32494C11.2732 9.54373 10.9764 9.66665 10.667 9.66665H1.33366C1.02424 9.66665 0.727493 9.54373 0.508701 9.32494C0.289908 9.10614 0.166992 8.8094 0.166992 8.49998V1.49998ZM2.21974 1.49998L6.00033 4.80806L9.78091 1.49998H2.21974ZM10.667 2.27523L6.38474 6.02256C6.27837 6.11576 6.14176 6.16715 6.00033 6.16715C5.8589 6.16715 5.72228 6.11576 5.61591 6.02256L1.33366 2.27523V8.49998H10.667V2.27523Z"
+                  fill="black"
+                />
+              </svg>
+              ricardo@avejo.com.br
+            </span>
+          </a>
+          <a href="https://wa.me/5512991822358?text=Hello%2C%20how%20are%20you%3F%20I%27d%20like%20to%20talk%20about%20a%20project%20with%20you!">
+            <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center ">
+              <svg className="mr-2" width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.91699 0.166687C8.21133 0.166594 8.49482 0.277757 8.71065 0.477894C8.92647 0.67803 9.05867 0.952346 9.08074 1.24585L9.08366 1.33335V10.6667C9.08375 10.961 8.97259 11.2445 8.77245 11.4603C8.57232 11.6762 8.298 11.8084 8.00449 11.8304L7.91699 11.8334H2.08366C1.78932 11.8334 1.50583 11.7223 1.29001 11.5221C1.07418 11.322 0.941984 11.0477 0.919909 10.7542L0.916992 10.6667V1.33335C0.916899 1.03902 1.02806 0.755523 1.2282 0.539701C1.42833 0.323878 1.70265 0.191679 1.99616 0.169604L2.08366 0.166687H7.91699ZM7.91699 1.33335H2.08366V10.6667H7.91699V1.33335ZM5.29199 8.33335C5.36026 8.33333 5.42637 8.35725 5.47881 8.40096C5.53125 8.44466 5.5667 8.50537 5.57899 8.57252L5.58366 8.62502V9.20835C5.58368 9.27662 5.55976 9.34273 5.51606 9.39517C5.47235 9.44761 5.41164 9.48307 5.34449 9.49535L5.29199 9.50002H4.70866C4.64039 9.50004 4.57428 9.47612 4.52184 9.43242C4.4694 9.38872 4.43395 9.328 4.42166 9.26085L4.41699 9.20835V8.62502C4.41697 8.55676 4.44089 8.49065 4.48459 8.4382C4.5283 8.38576 4.58901 8.35031 4.65616 8.33802L4.70866 8.33335H5.29199Z"
+                  fill="black"
+                />
+              </svg>
+              +55 (12) 99182-2358
+            </span>
+          </a>
+          <a href="https://www.instagram.com/avejodesign/">
+            <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center ">
+              <InstagramSVG className="mr-2" /> @avejodesign
+            </span>
+          </a>
+        </div>
+      </div>
+      <div className="md:flex-1">
+        <div className="md:p-10 p-6 border rounded-[26px] lg:w-[540px] w-full mx-auto form-contact">
+          <form onSubmit={handleSubmit}>
+            {successForm ? (
+              <div className="text-center py-40">
+                <div className="bg-black rounded-3xl p-6 w-[fit-content] m-auto mb-6">
+                  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.6251 3.10065L18.4588 4.66006C18.8584 4.99984 19.3547 5.20542 19.8775 5.24776L22.2767 5.44165C23.499 5.54043 24.4693 6.51075 24.5681 7.73301L24.7621 10.1323C24.8044 10.6551 25.0099 11.1514 25.3497 11.551L26.9091 13.3846C27.7035 14.3187 27.7035 15.691 26.9091 16.6251L25.3497 18.4588C25.0099 18.8584 24.8043 19.3547 24.762 19.8775L24.5681 22.2767C24.4693 23.499 23.499 24.4693 22.2767 24.5681L19.8775 24.7621C19.3547 24.8044 18.8584 25.0099 18.4588 25.3497L16.6251 26.9091C15.691 27.7035 14.3187 27.7035 13.3846 26.9091L11.551 25.3497C11.1514 25.0099 10.6551 24.8043 10.1323 24.762L7.73301 24.5681C6.51075 24.4693 5.54043 23.499 5.44165 22.2767L5.2477 19.8775C5.20536 19.3547 4.99978 18.8584 4.66 18.4588L3.10065 16.6251C2.30629 15.691 2.30629 14.3187 3.10065 13.3846L4.66006 11.551C4.99984 11.1514 5.20542 10.6551 5.24776 10.1323L5.44165 7.73301C5.54043 6.51075 6.51075 5.54043 7.73301 5.44165L10.1323 5.2477C10.6551 5.20536 11.1514 4.99978 11.551 4.66L13.3846 3.10065C14.3187 2.30629 15.691 2.30629 16.6251 3.10065ZM19.7071 10.534L13.75 16.5235L10.8838 13.6574L9.11624 15.4249L13.75 20.0587L21.4748 12.3016L19.7071 10.534Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+                <ShuffleText
+                  as="h1"
+                  duration="1"
+                  className="shuffle-text md:text-2xl text-xl pb-2 size-fit m-auto"
+                  stagger={0.002}
+                >
+                  {t.contactPage.successTitle}
+                </ShuffleText>
+                <p className="text-sm mb-6">
+                  {t.contactPage.successDescriptionLine1}
+                  <br />
+                  {t.contactPage.successDescriptionLine2}
+                </p>
+                <a href="https://www.instagram.com/avejodesign/">
+                  <span className="hover:opacity-80 font-medium border border-gray-300 rounded-full py-2 px-4 text-sm flex items-center w-[fit-content] m-auto">
+                    <InstagramSVG className="mr-2" /> @avejodesign
+                  </span>
+                </a>
+              </div>
+            ) : (
+              <>
+                <ShuffleText
+                  as="h2"
+                  duration="1"
+                  className="shuffle-text md:text-2xl text-xl pb-6 size-fit"
+                  stagger={0.002}
+                >
+                  {t.contactPage.formTitle}
+                </ShuffleText>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="name" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.name}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.namePlaceholder}
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.name}
+                  />
+                </div>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="email" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.email}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.emailPlaceholder}
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                </div>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="phone" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.phone}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.phonePlaceholder}
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.phone}
+                  />
+                </div>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="business" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.business}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.businessPlaceholder}
+                    type="text"
+                    id="business"
+                    name="business"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.business}
+                  />
+                </div>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="website" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.website}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.websitePlaceholder}
+                    type="text"
+                    id="website"
+                    name="website"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.website}
+                  />
+                </div>
+                <div className="mb-6 flex flex-col relative ">
+                  <label htmlFor="budget" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.budget}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <select
+                    className="h-12 border rounded-full px-4"
+                    required
+                    id="budget"
+                    name="budget"
+                    value={formData.budget}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      {t.contactPage.fields.budgetPlaceholder}
+                    </option>
+                    <option value="option1">{t.contactPage.budgetOptions[0]}</option>
+                    <option value="option2">{t.contactPage.budgetOptions[1]}</option>
+                    <option value="option3">{t.contactPage.budgetOptions[2]}</option>
+                    <option value="option4">{t.contactPage.budgetOptions[3]}</option>
+                    <option value="option5">{t.contactPage.budgetOptions[4]}</option>
+                  </select>
+                </div>
+                <div className="mb-6 flex flex-col">
+                  <label htmlFor="deadline" className="md:text-base text-sm font-medium mb-2">
+                    {t.contactPage.fields.deadline}
+                    <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    placeholder={t.contactPage.fields.deadlinePlaceholder}
+                    type="text"
+                    id="deadline"
+                    name="deadline"
+                    required
+                    className="h-12 border rounded-full px-4"
+                    onChange={handleChange}
+                    value={formData.deadline}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="button-hero w-full bg-black text-white md:md:text-base text-sm py-3 px-6 rounded-full hover:opacity-60 transition"
+                >
+                  {status}
+                </button>
+              </>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};

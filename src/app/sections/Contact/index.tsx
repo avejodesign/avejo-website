@@ -70,7 +70,7 @@ export const Contact = () => {
                         <ShuffleText as="p" duration="1" className="shuffle-text md:text-base text-sm font-medium mb-6" stagger={0.005}>
                             {t.contactSection.description}
                         </ShuffleText>
-                        <Link href="/contact">
+                        <Link href="https://cal.com/avejo-design-uvkxm8/30min">
                             <ButtonComponent id="button-contact" onClick={() => null}>{t.contactSection.cta}</ButtonComponent>
                         </Link>
                     </div>

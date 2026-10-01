@@ -98,13 +98,13 @@ export const Footer = () => {
                                     <a href="https://wa.me/5512991822358?text=Hello%2C%20how%20are%20you%3F%20I%27d%20like%20to%20talk%20about%20a%20project%20with%20you!" >+55 (12) 99182-2358</a>
                                 </li>
                                 <li className="md:text-base text-sm font-medium text-gray-400 hover:text-black transition">
-                                    <a href="mailto:avejo.design@gmail.com" >avejo.design@gmail.com</a>
+                                    <a href="mailto:ricardo@avejo.com.br" >ricardo@avejo.com.br</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div className="md:flex justify-between" id="footer-down">
-                        <p className="md:text-base font-medium md:mb-0 mb-4">© Avejo 2025. {t.footer.rights}</p>
+                        <p className="md:text-base font-medium md:mb-0 mb-4">© Avejo 2026. {t.footer.rights}</p>
                         <ul className="md:flex">
                             <li><a href="#" className="md:text-base text-sm font-medium text-gray-400 hover:text-black transition">{t.footer.privacy}</a></li>
                             <div className="mx-4 text-gray-400 md:block hidden">•</div>
